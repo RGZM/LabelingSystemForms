@@ -46,9 +46,41 @@ public class SQLite {
                         object.put("potter", potter);
                         form.put("id", Integer.parseInt(rs.getString("f_id")));
                         form.put("img", rs.getString("f_img"));
-                        form.put("ls", rs.getString("f_ls"));
-                        // TODO get info from labeling system
-                        // resolve mapping
+                        String ls = rs.getString("f_ls");
+                        form.put("ls", ls);
+                        String[] lsSplit = ls.split("/");
+                        String lsID = lsSplit[lsSplit.length - 1];
+                        String url_string = LSHOST + "/api/v1/labels/" + lsID + "?equalConcepts=true";
+                        URL url = new URL(url_string);
+                        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                        conn.setRequestProperty("Accept", "application/json");
+                        conn.setRequestProperty("Accept-Encoding", "*");
+                        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+                        String inputLine;
+                        StringBuilder response = new StringBuilder();
+                        while ((inputLine = br.readLine()) != null) {
+                            response.append(inputLine);
+                        }
+                        br.close();
+                        JSONObject jsonObject = (JSONObject) new JSONParser().parse(response.toString());
+                        JSONArray equalConcepts = (JSONArray) jsonObject.get("equalConcepts");
+                        //form.put("ls-entry", jsonObject);
+                        form.put("name", jsonObject.get("thumbnail"));
+                        JSONArray equalNames = new JSONArray();
+                        Map<String, String> map = new HashMap<String, String>();
+                        for (Object item : equalConcepts) {
+                            JSONObject obj = (JSONObject) item;
+                            map.put(obj.get("id").toString(), obj.get("thumbnail").toString());
+                        }
+                        Iterator<Entry<String, String>> iterator = map.entrySet().iterator();
+                        while (iterator.hasNext()) {
+                            Map.Entry<String, String> entry = (Map.Entry<String, String>) iterator.next();
+                            JSONObject obj = new JSONObject();
+                            obj.put("uri", LSHOST + "/item/label/" + entry.getKey());
+                            obj.put("name", entry.getValue());
+                            equalNames.add(obj);
+                        }
+                        form.put("equals", equalNames);
                         object.put("form", form);
                     }
                 }
@@ -86,9 +118,41 @@ public class SQLite {
                         object.put("potter", potter);
                         form.put("id", Integer.parseInt(rs.getString("f_id")));
                         form.put("img", rs.getString("f_img"));
-                        form.put("ls", rs.getString("f_ls"));
-                        // TODO get info from labeling system
-                        // resolve mapping
+                        String ls = rs.getString("f_ls");
+                        form.put("ls", ls);
+                        String[] lsSplit = ls.split("/");
+                        String lsID = lsSplit[lsSplit.length - 1];
+                        String url_string = LSHOST + "/api/v1/labels/" + lsID + "?equalConcepts=true";
+                        URL url = new URL(url_string);
+                        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                        conn.setRequestProperty("Accept", "application/json");
+                        conn.setRequestProperty("Accept-Encoding", "*");
+                        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+                        String inputLine;
+                        StringBuilder response = new StringBuilder();
+                        while ((inputLine = br.readLine()) != null) {
+                            response.append(inputLine);
+                        }
+                        br.close();
+                        JSONObject jsonObject = (JSONObject) new JSONParser().parse(response.toString());
+                        JSONArray equalConcepts = (JSONArray) jsonObject.get("equalConcepts");
+                        //form.put("ls-entry", jsonObject);
+                        form.put("name", jsonObject.get("thumbnail"));
+                        JSONArray equalNames = new JSONArray();
+                        Map<String, String> map = new HashMap<String, String>();
+                        for (Object item : equalConcepts) {
+                            JSONObject obj = (JSONObject) item;
+                            map.put(obj.get("id").toString(), obj.get("thumbnail").toString());
+                        }
+                        Iterator<Entry<String, String>> iterator = map.entrySet().iterator();
+                        while (iterator.hasNext()) {
+                            Map.Entry<String, String> entry = (Map.Entry<String, String>) iterator.next();
+                            JSONObject obj = new JSONObject();
+                            obj.put("uri", LSHOST + "/item/label/" + entry.getKey());
+                            obj.put("name", entry.getValue());
+                            equalNames.add(obj);
+                        }
+                        form.put("equals", equalNames);
                         object.put("form", form);
                         objects.add(object);
                     }
@@ -127,9 +191,41 @@ public class SQLite {
                         object.put("potter", potter);
                         form.put("id", Integer.parseInt(rs.getString("f_id")));
                         form.put("img", rs.getString("f_img"));
-                        form.put("ls", rs.getString("f_ls"));
-                        // TODO get info from labeling system
-                        // resolve mapping
+                        String ls = rs.getString("f_ls");
+                        form.put("ls", ls);
+                        String[] lsSplit = ls.split("/");
+                        String lsID = lsSplit[lsSplit.length - 1];
+                        String url_string = LSHOST + "/api/v1/labels/" + lsID + "?equalConcepts=true";
+                        URL url = new URL(url_string);
+                        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                        conn.setRequestProperty("Accept", "application/json");
+                        conn.setRequestProperty("Accept-Encoding", "*");
+                        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+                        String inputLine;
+                        StringBuilder response = new StringBuilder();
+                        while ((inputLine = br.readLine()) != null) {
+                            response.append(inputLine);
+                        }
+                        br.close();
+                        JSONObject jsonObject = (JSONObject) new JSONParser().parse(response.toString());
+                        JSONArray equalConcepts = (JSONArray) jsonObject.get("equalConcepts");
+                        //form.put("ls-entry", jsonObject);
+                        form.put("name", jsonObject.get("thumbnail"));
+                        JSONArray equalNames = new JSONArray();
+                        Map<String, String> map = new HashMap<String, String>();
+                        for (Object item : equalConcepts) {
+                            JSONObject obj = (JSONObject) item;
+                            map.put(obj.get("id").toString(), obj.get("thumbnail").toString());
+                        }
+                        Iterator<Entry<String, String>> iterator = map.entrySet().iterator();
+                        while (iterator.hasNext()) {
+                            Map.Entry<String, String> entry = (Map.Entry<String, String>) iterator.next();
+                            JSONObject obj = new JSONObject();
+                            obj.put("uri", LSHOST + "/item/label/" + entry.getKey());
+                            obj.put("name", entry.getValue());
+                            equalNames.add(obj);
+                        }
+                        form.put("equals", equalNames);
                         object.put("form", form);
                         objects.add(object);
                     }
