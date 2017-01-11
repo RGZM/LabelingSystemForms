@@ -19,7 +19,7 @@ public class SQLite {
     private static final String DBDRIVER = "org.sqlite.JDBC";
     //private static final String DBFILE = "C:/tmp/caa-hd.sqlite";
     //private static final String IMGFOLDER = "C:/tmp/forms/";
-    private static final String DBFILE = "http://143.93.114.135/examples/keramik/caa-hd.sqlite";
+    private static final String DBFILE = "/opt/tomcat/webapps/examples/keramik/caa-hd.sqlite";
     private static final String IMGFOLDER = "http://143.93.114.135/examples/keramik/forms/";
     private static final String LSHOST = "http://143.93.114.135";
 
@@ -31,7 +31,7 @@ public class SQLite {
                 String sql = "SELECT * FROM form WHERE id = " + id;
                 try (ResultSet rs = stmt.executeQuery(sql)) {
                     while (rs.next()) {
-                        if (rs.getString("img").contains("null")) {
+                        if (rs.getString("img").equals("")) {
                             form.put("img", "");
                         } else {
                             String[] imgsplit = rs.getString("img").split(";");
@@ -89,7 +89,7 @@ public class SQLite {
                             String sql2 = "SELECT * FROM form WHERE ls LIKE \"%" + entry.getKey() + "%\"";
                             try (ResultSet rs2 = stmt.executeQuery(sql2)) {
                                 while (rs2.next()) {
-                                    if (rs.getString("img").contains("null")) {
+                                    if (rs.getString("img").equals("")) {
                                         obj.put("img", "");
                                     } else {
                                         obj.put("img", IMGFOLDER + rs.getString("img"));
@@ -121,7 +121,7 @@ public class SQLite {
                     while (rs.next()) {
                         JSONObject form = new JSONObject();
                         form.put("id", Integer.parseInt(rs.getString("id")));
-                        if (rs.getString("img").contains("null")) {
+                        if (rs.getString("img").equals("")) {
                             form.put("img", "");
                         } else {
                             form.put("img", IMGFOLDER + rs.getString("img"));
