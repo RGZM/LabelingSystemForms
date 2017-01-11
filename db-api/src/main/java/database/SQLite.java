@@ -17,8 +17,10 @@ import org.json.simple.parser.JSONParser;
 public class SQLite {
 
     private static final String DBDRIVER = "org.sqlite.JDBC";
-    private static final String DBFILE = "C:/tmp/caa-hd.sqlite";
-    private static final String IMGFOLDER = "C:/tmp/forms/";
+    //private static final String DBFILE = "C:/tmp/caa-hd.sqlite";
+    //private static final String IMGFOLDER = "C:/tmp/forms/";
+    private static final String DBFILE = "http://143.93.114.135/examples/keramik/caa-hd.sqlite";
+    private static final String IMGFOLDER = "http://143.93.114.135/examples/keramik/forms/";
     private static final String LSHOST = "http://143.93.114.135";
 
     public static JSONObject getForm(String id) throws SQLException, ClassNotFoundException, IOException {
@@ -118,6 +120,7 @@ public class SQLite {
                 try (ResultSet rs = stmt.executeQuery(sql)) {
                     while (rs.next()) {
                         JSONObject form = new JSONObject();
+                        form.put("id", Integer.parseInt(rs.getString("id")));
                         if (rs.getString("img").contains("null")) {
                             form.put("img", "");
                         } else {
