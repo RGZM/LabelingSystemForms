@@ -32,7 +32,12 @@ public class SQLite {
                         if (rs.getString("img").contains("null")) {
                             form.put("img", "");
                         } else {
-                            form.put("img", IMGFOLDER + rs.getString("img"));
+                            String[] imgsplit = rs.getString("img").split(";");
+                            if (imgsplit.length == 2) {
+                                form.put("img", IMGFOLDER + imgsplit[0] + ";" + IMGFOLDER + imgsplit[1]);
+                            } else {
+                                form.put("img", IMGFOLDER + rs.getString("img"));
+                            }
                         }
                         form.put("localname", rs.getString("localname"));
                         String ls = rs.getString("ls");
