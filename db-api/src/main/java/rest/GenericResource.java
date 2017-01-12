@@ -25,10 +25,10 @@ public class GenericResource {
         try {
             JSONArray forms = SQLite.getForms();
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            return Response.ok(gson.toJson(forms)).header("Access-Control-Allow-Origin", "*").header("Content-Type", "application/json;charset=UTF-8").build();
+            return Response.ok(gson.toJson(forms)).header("Content-Type", "application/json;charset=UTF-8").build();
         } catch (Exception e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(Logging.getMessageJSON(e, "rest.GenericResource")).
-                    header("Access-Control-Allow-Origin", "*").header("Content-Type", "application/json;charset=UTF-8").build();
+                    header("Content-Type", "application/json;charset=UTF-8").build();
         }
     }
 
@@ -39,10 +39,10 @@ public class GenericResource {
         try {
             JSONObject form = SQLite.getForm(itemID);
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            return Response.ok(gson.toJson(form)).header("Access-Control-Allow-Origin", "*").header("Content-Type", "application/json;charset=UTF-8").build();
+            return Response.ok(gson.toJson(form)).header("Content-Type", "application/json;charset=UTF-8").build();
         } catch (Exception e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(Logging.getMessageJSON(e, "rest.GenericResource")).
-                    header("Access-Control-Allow-Origin", "*").header("Content-Type", "application/json;charset=UTF-8").build();
+                    header("Content-Type", "application/json;charset=UTF-8").build();
         }
     }
 
